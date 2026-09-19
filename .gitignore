@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Java
+*.class
+
+# C/C++ compiled files
+*.o
+*.out
+
+# Code::Blocks / IDE
+.vscode/
+.idea/
+
+# Competitive Programming temporary files
+.cph/
