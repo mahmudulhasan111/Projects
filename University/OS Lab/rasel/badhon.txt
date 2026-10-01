@@ -1,0 +1,1228 @@
+//Binary Mode File
+#include<stdio.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<sys/syscall.h>
+
+void createFile(){
+  char name[100];
+
+  printf("Enter the filename to be created: "); fflush(stdout);
+  
+  scanf("%s", name);
+  
+  
+  int fd = open(name, O_CREAT | O_RDWR | O_TRUNC, 0666);
+  if(fd > 0){
+    write(1, "File created successfull\n", 25);
+  }else{
+    write(1, "File creation failed\n", 21);
+  }
+}
+
+void deleteFile(){
+  char name[100];
+  printf("Enter the filename to be deleted: "); fflush(stdout);
+  
+  scanf("%s", name);
+  // printf("%s\n", name);
+
+  int res = unlink(name);
+  if(res == 0){
+    write(1, "File deleted\n", 13);
+  }else{
+    write(1, "Failed to delete\n", 17);
+  }
+}
+
+void readFile(){
+  char name[100];
+  write(1, "Enter the filename to be read: ", 30);
+  scanf("%s", name);
+
+  int src = open(name, O_RDONLY);
+
+  char buffer[4096];
+  int dest = 1, bytes; //stdout 
+
+  while((bytes = read(src, buffer, sizeof(buffer))) > 0){
+    write(dest, buffer, bytes);
+  }
+  close(src);
+}
+
+void copyFile(){
+  printf("Ente the source and destination filename\n" );
+  char from[100], to[100];
+  scanf("%s %s", from, to);
+  
+  int src = open(from, O_RDONLY);
+  int dest = open(to, O_WRONLY | O_CREAT, 0666);
+
+  int bytes = 0;
+  char buffer[4096];
+  while((bytes = read(src, buffer, sizeof(buffer))) > 0){
+    write(dest, buffer, sizeof(buffer));
+  }
+  close(src);
+  close(dest);
+
+}
+
+void renameFile(){
+  printf("Enter the current filename and the new filename: ");
+  char cur[100], new_name[100];
+  scanf("%s %s", cur, new_name);
+
+  int res = syscall(SYS_rename, cur, new_name);
+  if(res == 0){
+    printf("successful\n");
+  }else{
+    printf("Failed\n");
+  }
+}
+
+int main(){
+  while(1){
+    printf("Please enter: \n");
+    printf("1 For create a file.\n");
+    printf("2 For delete a file.\n");
+    printf("3 For read a file.\n");
+    printf("4 For write a file.\n");
+    printf("5 For copy a file.\n");
+    printf("6 For rename a file.\n");
+    printf("\n");
+    fflush(stdout);
+
+    int n = 0;
+    scanf("%d", &n);
+
+    if(n == 1){
+      createFile();
+    }else if(n == 2){
+      deleteFile();
+    }else if(n == 3){
+      readFile();
+    }else if(n == 4){
+
+    }else if(n == 5){
+      copyFile();
+    }else if(n == 6){
+      renameFile();
+    }
+  }
+  
+}
+
+//Multiple Child:
+
+   #include<bits/stdc++.h>
+#include <sys/wait.h>
+
+using namespace std;
+
+int main(){
+  cout << "Parent started." << endl << endl;
+  for(int i = 1; i <= 3; i++){
+    pid_t pid = fork();
+    if(pid < 0){
+      cout << "Fork failed\n";
+      exit(1);
+    }else if(pid == 0){
+      cout << "Child: " << i <<" is running" << endl;
+      cout << "Child PID: " << getpid() << endl;
+      cout << "Parent PID: " << getppid() << endl;
+      cout << "Child: " << i <<" finished.\n" << endl;
+      exit(0);
+    }else{
+      wait(NULL);
+    }
+  }
+  cout << "Parent finished\n";
+}
+
+//Parent Child process
+ 
+ #include<bits/stdc++.h>
+#include <sys/wait.h>
+
+using namespace std;
+
+int main(){
+    pid_t pid;
+    cout << "Parent process started" << endl;
+    cout << "Parrent PID: " << getpid() << endl << endl;
+    pid = fork();
+
+    if(pid < 0){
+        cout << "Fork failed\n";
+        exit(1);
+    }else if(pid == 0){
+        cout << "Child process executing\n";
+        cout << "Child PID: " << getpid() << endl;
+        cout << "Child Parent PID: " << getppid() << endl;
+        cout << "Child process finished\n\n";
+    }else{
+        wait(NULL);
+        cout << "Parent Process Executing\n";
+        cout << "Parent PID: " << getpid() << endl;
+        cout << "Parent process Terminated\n";
+    }
+}
+
+//Scheduling Algorithm
+
+//MLFQ
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nl cout << endl;
+
+struct Process{
+  int pid, at, bt, priority;
+  int ct, tat, wt, queue_no;
+  int rem_bt;
+  bool finished = false, vis = false;
+
+  void show(){
+    cout << pid <<"\t" << at <<"\t" << bt <<"\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+  }
+};
+
+struct Gantt{
+  int pid, start, end;
+};
+
+void showGanttChart(vector<Gantt> g){
+  cout << "\n\nGantt Chart\n\n";
+  for(auto x : g){
+    if(x.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << x.pid <<" ";
+    }
+  }
+  cout << "|\n";
+  cout << g[0].start;
+  for(auto x : g){
+    cout << setw(5) << x.end;
+  }
+  nl;
+}
+
+int32_t main(){
+  int n = 0; 
+  cin >> n;
+  vector<Process> p(n);
+  vector<Gantt> g;
+  for(int i = 0; i < n; i++){
+    p[i].pid = i + 1;
+    cin >> p[i].at >> p[i].bt;
+    p[i].rem_bt = p[i].bt;
+  }
+
+  queue<int> q1, q2, q3;
+  int tq1 = 2, tq2 = 4; //Time quantum for round robin 1 and 2 
+
+  int curTime = 0, completed = 0;
+
+  auto doneTask = [&](int i){
+    p[i].ct = curTime;
+    p[i].tat = p[i].ct - p[i].at;
+    p[i].wt = p[i].tat - p[i].bt;
+    p[i].finished = true;
+    completed++;
+  };
+
+  while(completed < n){
+    for(int i = 0; i < n; i++){
+      if(!p[i].finished and p[i].at <= curTime and !p[i].vis){
+        q1.push(i);
+        p[i].vis = true;
+      }
+    }
+
+    if(!q1.empty()){
+      int i = q1.front(); 
+      q1.pop();
+      int runTime = min(tq1, p[i].rem_bt);
+      g.push_back({p[i].pid, curTime, curTime + runTime});
+      curTime += runTime;
+      p[i].rem_bt -= runTime;
+
+      if(p[i].rem_bt == 0){
+        doneTask(i);
+      }else{
+        q2.push(i);
+      }
+
+    }else if(!q2.empty()){
+      int i = q2.front(); 
+      q2.pop();
+
+      int runTime = min(tq2, p[i].rem_bt);
+      g.push_back({p[i].pid, curTime, curTime + runTime});
+
+      curTime += runTime;
+      p[i].rem_bt -= runTime;
+
+      if(p[i].rem_bt == 0){
+        doneTask(i);
+      }else{
+        q3.push(i);
+      }
+
+    }else if(!q3.empty()){
+      int i = q3.front();
+      q3.pop();
+      g.push_back({p[i].pid, curTime, curTime + p[i].rem_bt});
+      curTime += p[i].rem_bt;
+      p[i].rem_bt = 0;
+
+      doneTask(i);
+
+    }else {
+      g.push_back({-1, curTime, curTime + 1});
+      curTime++;
+    }
+  }
+  
+  cout << "\nPID\tAT\tBT\tCT\tTAT\tWT\n";
+
+  double totTat = 0, totWt = 0;
+  for(auto i : p){
+    totTat += i.tat;
+    totWt += i.wt;
+    i.show();
+  }
+  totTat /= n; totWt /= n;
+  
+  nl;
+  cout << "Total turnaround time: " << totTat << endl;
+  cout << "Total waiting time: " << totWt << endl;
+  showGanttChart(g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT) and Burst Time (BT) for each process.
+
+Example Input:
+5
+0 5
+1 3
+2 8
+3 6
+4 4
+
+Algorithm:
+- This program implements Multilevel Queue Scheduling.
+- Three priority levels are used:
+    Queue 1 -> Round Robin Scheduling (Time Quantum = 2)
+    Queue 2 -> Round Robin Scheduling (Time Quantum = 4)
+    Queue 3 -> FCFS execution for remaining processes
+- All newly arrived processes enter Queue 1 first.
+- If a process is not completed in Queue 1, it moves to Queue 2.
+- If it is still not completed in Queue 2, it moves to Queue 3.
+- Higher priority queues are always executed before lower priority queues.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//fcfs
+
+#include<bits/stdc++.h>
+using namespace std;
+#define nl cout << endl 
+
+struct Process{
+	int pid, at, bt, tat, ct, wt; 
+	void show(){
+		cout << pid <<"\t" << at <<"\t" << bt <<"\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+	}
+};
+
+struct Gantt{
+	int pid, start, end;
+
+};
+
+int n; 
+
+void Print(vector<Process> &p, vector<Gantt> &g){
+	cout << "PID\tAT\tBT\tCT\tTAT\tWT\n";
+	double totTat = 0, totWt = 0;
+	for(auto i : p){
+		totWt += i.wt;
+		totTat += i.tat;
+		i.show();
+	}	
+	totTat /= n; totWt /= n;
+
+	nl;
+	cout << "Total turnaround time: " << totTat << endl;
+	cout << "Total waiting time: " << totWt << endl;
+
+	//Gantt Chart
+	cout << "\n\nGantt Chart\n\n";
+	for(auto i : g){
+    if(i.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << i.pid <<" ";
+    }
+  }
+	cout << "|\n";
+	cout << g[0].start;
+	for(auto i : g){
+		cout << setw(5) << i.end;
+	}
+	nl;
+
+}
+
+int32_t main(){
+	cin >> n;
+	vector<Process> p(n);
+	for(int i = 0; i < n; i++){
+		cin >> p[i].at >> p[i].bt; 
+		p[i].pid = i + 1;
+	}
+
+	sort(p.begin(), p.end(), [&](auto a, auto b){
+		if(a.at == b.at)return a.pid < b.pid;
+		return a.at < b.at;
+	});
+
+	int curTime = 0;
+	vector<Gantt> g;
+
+	for(int i = 0; i < n; i++){
+		if(curTime < p[i].at){
+			curTime = p[i].at;
+		}
+		g.push_back({p[i].pid, curTime, curTime + p[i].bt});
+		curTime += p[i].bt; 
+
+		p[i].ct = curTime;
+		p[i].tat = p[i].ct - p[i].at;
+		p[i].wt = p[i].tat - p[i].bt;
+	}
+
+	Print(p, g);
+}
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT) and Burst Time (BT) for each process.
+
+Example Input:
+5
+0 5
+1 3
+2 8
+3 6
+4 4
+
+Algorithm:
+- The processes are sorted according to Arrival Time (AT).
+- If two processes have the same arrival time, the process with the smaller PID executes first.
+- This program implements FCFS (First Come First Serve) CPU Scheduling.
+- It calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays the average turnaround time, average waiting time, and Gantt Chart.
+*/
+
+//Multilevel Queue
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nl cout << endl;
+
+struct Process{
+  int pid, at, bt, priority;
+  int ct, tat, wt, queue_no;
+  int rem_bt;
+  bool finished = false, vis = false;
+
+  void show(){
+    cout << pid <<"\t" << at <<"\t" << bt <<"\t" << priority <<"\t\t\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+  }
+};
+
+struct Gantt{
+  int pid, start, end;
+};
+
+void showGanttChart(vector<Gantt> g){
+  cout << "\n\nGantt Chart\n\n";
+  for(auto x : g){
+    if(x.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << x.pid <<" ";
+    }
+  }
+  cout << "|\n";
+  cout << g[0].start;
+  for(auto x : g){
+    cout << setw(5) << x.end;
+  }
+  nl;
+}
+
+int32_t main(){
+  int n = 0; 
+  cin >> n;
+  vector<Process> p(n);
+  vector<Gantt> g;
+  for(int i = 0; i < n; i++){
+    p[i].pid = i + 1;
+    cin >> p[i].at >> p[i].bt >> p[i].queue_no;
+    p[i].rem_bt = p[i].bt;
+  }
+
+  queue<int> q1, q2; //q1 = fcfs, q2 = RR
+  int tq = 2; //Time quantum for RR
+
+  int curTime = 0, completed = 0;
+  auto doneTask = [&](int i){
+    p[i].ct = curTime;
+    p[i].tat = p[i].ct - p[i].at;
+    p[i].wt = p[i].tat - p[i].bt;
+    p[i].finished = true;
+    completed++;
+  };
+
+  while(completed < n){
+    for(int i = 0; i < n; i++){
+      if(!p[i].finished and p[i].at <= curTime and !p[i].vis){
+        if(p[i].queue_no == 1){
+          q1.push(i);
+        }else{
+          q2.push(i);
+        }
+        p[i].vis = true;
+      }
+    }
+    if(!q1.empty()){
+      int i = q1.front(); 
+      q1.pop();
+
+      g.push_back({p[i].pid, curTime, curTime + p[i].bt});
+      curTime += p[i].bt;
+
+      doneTask(i);
+
+    }else if(!q2.empty()){
+      int i = q2.front(); 
+      q2.pop();
+      int runTime = min(tq, p[i].rem_bt);
+      g.push_back({p[i].pid, curTime, curTime + runTime});
+      curTime += runTime;
+      p[i].rem_bt -= runTime;
+
+      if(p[i].rem_bt == 0){
+        doneTask(i);
+      }else{
+        q2.push(i);
+      }
+
+    }else{
+      g.push_back({-1, curTime, curTime + 1});
+      curTime++;
+    }
+  }
+  
+  cout << "\nPID\tAT\tBT\tPriority\tCT\tTAT\tWT\n";
+
+  double totTat = 0, totWt = 0;
+  for(auto i : p){
+    totTat += i.tat;
+    totWt += i.wt;
+    i.show();
+  }
+  totTat /= n; totWt /= n;
+  
+  nl;
+  cout << "Total turnaround time: " << totTat << endl;
+  cout << "Total waiting time: " << totWt << endl;
+  showGanttChart(g);
+}
+
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT), Burst Time (BT), and Queue Number for each process.
+
+Queue Details:
+Queue 1 -> FCFS Scheduling (Higher Priority)
+Queue 2 -> Round Robin Scheduling (Time Quantum = 2)
+
+Example Input:
+5
+0 5 1
+1 3 2
+2 8 1
+3 6 2
+4 4 2
+
+Algorithm:
+- This program implements Multilevel Queue Scheduling.
+- Each process is assigned to a specific queue using the queue number.
+- Queue 1 has higher priority and uses FCFS scheduling.
+- Queue 2 has lower priority and uses Round Robin scheduling with a fixed time quantum.
+- CPU always executes Queue 1 before Queue 2.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//priority  non premitive
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define nl cout << endl;
+
+struct Process{
+  int pid, at, bt, priority;
+  int ct, tat, wt;
+  bool finished = false;
+  void show(){
+    cout << pid <<"\t" << at <<"\t" << bt <<"\t" << priority <<"\t\t\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+  }
+};
+
+struct Gantt{
+  int pid, start, end;
+};
+
+void showGanttChart(vector<Gantt> g){
+  cout << "\n\nGantt Chart\n\n";
+  for(auto x : g){
+    cout <<"| P" << x.pid <<" ";
+  }
+  cout << "|\n";
+  cout << g[0].start;
+  for(auto x : g){
+    cout << setw(5) << x.end;
+  }
+  nl;
+}
+
+int32_t main(){
+  int n = 0; 
+  cin >> n;
+  vector<Process> p(n);
+  vector<Gantt> g;
+  for(int i = 0; i < n; i++){
+    p[i].pid = i + 1;
+    cin >> p[i].at >> p[i].bt >> p[i].priority;
+  }
+
+  int curTime = 0, completed = 0;
+  while(completed < n){
+    int selected = -1;
+    for(int i = 0; i < n; i++){
+      if(!p[i].finished and p[i].at <= curTime){
+        if(selected == -1 or p[i].priority < p[selected].priority){
+          selected = i;
+        }
+      }
+    }
+    if(selected == -1){
+      curTime++;
+      continue;
+    }
+    g.push_back({p[selected].pid, curTime, curTime + p[selected].bt});
+    curTime += p[selected].bt;
+
+    p[selected].ct = curTime;
+    p[selected].tat = p[selected].ct - p[selected].at;
+    p[selected].wt = p[selected].tat - p[selected].bt;
+    p[selected].finished = true;
+    completed++;
+  }
+  
+  cout << "\nPID\tAT\tBT\tPriority\tCT\tTAT\tWT\n";
+
+  double totTat = 0, totWt = 0;
+  for(auto i : p){
+    totTat += i.tat;
+    totWt += i.wt;
+    i.show();
+  }
+  totTat /= n; totWt /= n;
+  
+  nl;
+  cout << "Total turnaround time: " << totTat << endl;
+  cout << "Total waiting time: " << totWt << endl;
+  showGanttChart(g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT), Burst Time (BT), and Priority value for each process.
+
+Example Input:
+5
+0 5 2
+1 3 1
+2 8 4
+3 6 3
+4 4 2
+
+Algorithm:
+- This program implements Non-Preemptive Priority Scheduling.
+- At every step, among all arrived processes, the process with the highest priority is selected.
+- A smaller priority number represents a higher priority.
+- The selected process runs until completion.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays the average turnaround time, average waiting time, and the Gantt Chart.
+*/
+
+//priority premitive
+
+#include<bits/stdc++.h>
+using namespace std;
+#define nl cout << endl 
+
+struct Process{
+	int pid, at, bt, tat, ct, wt, rem, priority; 
+	bool finished = false;
+	void show(){
+    cout << pid <<"\t" << at <<"\t" << bt <<"\t" << priority <<"\t\t\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+	}
+};
+
+struct Gantt{
+	int pid, start, end;
+
+};
+
+int n; 
+
+void Print(vector<Process> &p, vector<Gantt> &g){
+  cout << "\nPID\tAT\tBT\tPriority\tCT\tTAT\tWT\n";
+	double totTat = 0, totWt = 0;
+	for(auto i : p){
+		totWt += i.wt;
+		totTat += i.tat;
+		i.show();
+	}	
+	totTat /= n; totWt /= n;
+
+	nl;
+	cout << "Total turnaround time: " << totTat << endl;
+	cout << "Total waiting time: " << totWt << endl;
+
+	//Gantt Chart
+	cout << "\n\nGantt Chart\n\n";
+	for(auto i : g){
+    if(i.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << i.pid <<" ";
+    }
+  }
+	cout << "|\n";
+	cout << g[0].start;
+	for(auto i : g){
+		cout << setw(5) << i.end;
+	}
+	nl;
+
+}
+
+int32_t main(){
+	cin >> n;
+	vector<Process> p(n);
+	for(int i = 0; i < n; i++){
+		cin >> p[i].at >> p[i].bt >> p[i].priority; 
+		p[i].pid = i + 1;
+		p[i].rem = p[i].bt;
+	}
+
+
+	vector<Gantt> g;
+	int curTime = 0, completed = 0;
+
+	while(completed < n){
+		int s = -1;
+		for(int i = 0; i < n; i++){
+			if(!p[i].finished and p[i].at <= curTime){
+				if(s == -1 or p[i].priority < p[s].priority){
+					s = i;
+				}
+			}
+		}
+		if(s == -1){
+			if(!g.empty() and g.back().pid == -1){
+				g.back().end++;
+			}else{
+				g.push_back({-1, curTime, curTime + 1});
+			}
+			curTime++;
+			continue;
+		}
+		auto &x = p[s];
+		if(!g.empty() and g.back().pid == x.pid){
+			g.back().end++;
+		}else{
+			g.push_back({x.pid, curTime, curTime + 1});
+		}
+		x.rem--;
+		curTime++;
+		if(x.rem == 0){
+			x.ct = curTime;
+			x.tat = x.ct - x.at;
+			x.wt = x.tat - x.bt;
+			x.finished = true;
+			completed++;
+		}
+	}
+
+	Print(p, g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT), Burst Time (BT), and Priority value for each process.
+
+Example Input:
+5
+0 5 2
+1 3 1
+2 8 4
+3 6 3
+4 4 2
+
+Algorithm:
+- This program implements Preemptive Priority Scheduling.
+- At every unit of time, the scheduler selects the arrived process with the highest priority.
+- A smaller priority number indicates a higher priority.
+- The running process can be interrupted if another higher-priority process arrives.
+- Remaining Burst Time (rem_bt) is used to track unfinished execution.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//round robbin
+
+#include<bits/stdc++.h>
+using namespace std;
+#define nl cout << endl 
+
+struct Process{
+	int pid, at, bt, tat, ct, wt, rem; 
+	bool finished = false;
+	void show(){
+		cout << pid <<"\t" << at <<"\t" << bt <<"\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+	}
+};
+
+struct Gantt{
+	int pid, start, end;
+
+};
+
+int n; 
+
+void Print(vector<Process> &p, vector<Gantt> &g){
+	cout << "PID\tAT\tBT\tCT\tTAT\tWT\n";
+	double totTat = 0, totWt = 0;
+	for(auto i : p){
+		totWt += i.wt;
+		totTat += i.tat;
+		i.show();
+	}	
+	totTat /= n; totWt /= n;
+
+	nl;
+	cout << "Total turnaround time: " << totTat << endl;
+	cout << "Total waiting time: " << totWt << endl;
+
+	//Gantt Chart
+	cout << "\n\nGantt Chart\n\n";
+	for(auto i : g){
+    if(i.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << i.pid <<" ";
+    }
+  }
+	cout << "|\n";
+	cout << g[0].start;
+	for(auto i : g){
+		cout << setw(5) << i.end;
+	}
+	nl;
+
+}
+
+int32_t main(){
+	cin >> n;
+	vector<Process> p(n);
+	for(int i = 0; i < n; i++){
+		cin >> p[i].at >> p[i].bt; 
+		p[i].pid = i + 1;
+		p[i].rem = p[i].bt;
+	}
+	int tq = 1; 
+	cin >> tq;
+	sort(p.begin(), p.end(), [&](auto a, auto b){
+		if(a.at == b.at)return a.pid < b.pid;
+		return a.at < b.at;
+	});
+
+	vector<Gantt> g;
+	int curTime = 0, completed = 0, i = 0;
+
+	queue<int> q;
+	while(completed < n){
+		if(q.empty() and i < n and curTime < p[i].at){
+			g.push_back({-1, curTime, p[i].at});
+			curTime = p[i].at;
+		}
+
+		while(i < n and p[i].at <= curTime){
+			q.push(i); i++;
+		}
+		
+		int idx = q.front(); q.pop();
+
+		auto &x = p[idx];
+		int exc = min(tq, x.rem);
+		g.push_back({x.pid, curTime, curTime + exc});
+		curTime += exc;
+		x.rem -= exc;
+
+		while(i < n and p[i].at <= curTime){
+			q.push(i); i++;
+		}
+
+		if(x.rem == 0){
+			x.ct = curTime;
+			x.tat = x.ct - x.at;
+			x.wt = x.tat - x.bt;
+			completed++;
+		}else{
+			q.push(idx);
+		}
+	}
+
+	Print(p, g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT) and Burst Time (BT) for each process.
+Finally, enter the Time Quantum (TQ) value.
+
+Example Input:
+5
+0 5
+1 3
+2 8
+3 6
+4 4
+2
+
+Algorithm:
+- This program implements Round Robin CPU Scheduling.
+- Each process gets a fixed CPU time called Time Quantum (TQ).
+- If a process is not completed within its quantum, it is moved to the end of the ready queue.
+- Processes are executed in circular order until all processes are completed.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//Shortest Job First
+
+#include<bits/stdc++.h>
+using namespace std;
+#define nl cout << endl 
+
+struct Process{
+	int pid, at, bt, tat, ct, wt; 
+	bool finished = false;
+	void show(){
+		cout << pid <<"\t" << at <<"\t" << bt <<"\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+	}
+};
+
+struct Gantt{
+	int pid, start, end;
+
+};
+
+int n; 
+
+void Print(vector<Process> &p, vector<Gantt> &g){
+	cout << "PID\tAT\tBT\tCT\tTAT\tWT\n";
+	double totTat = 0, totWt = 0;
+	for(auto i : p){
+		totWt += i.wt;
+		totTat += i.tat;
+		i.show();
+	}	
+	totTat /= n; totWt /= n;
+
+	nl;
+	cout << "Total turnaround time: " << totTat << endl;
+	cout << "Total waiting time: " << totWt << endl;
+
+	//Gantt Chart
+	cout << "\n\nGantt Chart\n\n";
+	for(auto i : g){
+    if(i.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << i.pid <<" ";
+    }
+  }
+	cout << "|\n";
+	cout << g[0].start;
+	for(auto i : g){
+		cout << setw(5) << i.end;
+	}
+	nl;
+
+}
+
+int32_t main(){
+	cin >> n;
+	vector<Process> p(n);
+	for(int i = 0; i < n; i++){
+		cin >> p[i].at >> p[i].bt; 
+		p[i].pid = i + 1;
+	}
+
+	vector<Gantt> g;
+	int curTime = 0, completed = 0;
+
+
+	while(completed < n){
+		int s = -1;
+		for(int i = 0; i < n; i++){
+			if(!p[i].finished and p[i].at <= curTime){
+				if(s == -1 or (p[i].bt < p[s].bt) or (p[i].bt == p[s].bt and p[i].at < p[s].at)){
+					s = i;
+				}
+			}
+		}
+		if(s == -1){
+			g.push_back({-1, curTime, curTime + 1});
+			curTime++;
+		}else{
+			auto &x = p[s];
+			g.push_back({x.pid, curTime, curTime + x.bt});
+
+			curTime += x.bt;
+			x.ct = curTime;
+			x.tat = x.ct - x.at;
+			x.wt = x.tat - x.bt;
+			x.finished = true;
+			completed++;
+		}
+	}
+
+
+	Print(p, g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT) and Burst Time (BT) for each process.
+
+Example Input:
+5
+0 5
+1 3
+2 8
+3 6
+4 4
+
+Algorithm:
+- This program implements Non-Preemptive Shortest Job First (SJF) Scheduling.
+- Among all arrived processes, the process with the shortest Burst Time (BT) is selected.
+- If two processes have the same Burst Time, the one with the earlier Arrival Time is selected.
+- The selected process runs until completion.
+- If no process has arrived, the CPU remains idle.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//SRTF
+#include<bits/stdc++.h>
+using namespace std;
+#define nl cout << endl 
+
+struct Process{
+	int pid, at, bt, tat, ct, wt, rem; 
+	bool finished = false;
+	void show(){
+		cout << pid <<"\t" << at <<"\t" << bt <<"\t" << ct <<"\t" << tat <<"\t" << wt << endl;
+	}
+};
+
+struct Gantt{
+	int pid, start, end;
+
+};
+
+int n; 
+
+void Print(vector<Process> &p, vector<Gantt> &g){
+	cout << "PID\tAT\tBT\tCT\tTAT\tWT\n";
+	double totTat = 0, totWt = 0;
+	for(auto i : p){
+		totWt += i.wt;
+		totTat += i.tat;
+		i.show();
+	}	
+	totTat /= n; totWt /= n;
+
+	nl;
+	cout << "Total turnaround time: " << totTat << endl;
+	cout << "Total waiting time: " << totWt << endl;
+
+	//Gantt Chart
+	cout << "\n\nGantt Chart\n\n";
+	for(auto i : g){
+    if(i.pid == -1){
+      cout <<"|Idle";
+    }else{
+      cout <<"| P" << i.pid <<" ";
+    }
+  }
+	cout << "|\n";
+	cout << g[0].start;
+	for(auto i : g){
+		cout << setw(5) << i.end;
+	}
+	nl;
+
+}
+
+int32_t main(){
+	cin >> n;
+	vector<Process> p(n);
+	for(int i = 0; i < n; i++){
+		cin >> p[i].at >> p[i].bt; 
+		p[i].pid = i + 1;
+		p[i].rem = p[i].bt;
+	}
+
+	vector<Gantt> g;
+	int curTime = 0, completed = 0;
+
+
+	while(completed < n){
+		int s = -1;
+		for(int i = 0; i < n; i++){
+			if(!p[i].finished and p[i].at <= curTime){
+				if(s == -1 or (p[i].rem < p[s].rem) or (p[i].rem == p[s].rem and p[i].at < p[s].at)){
+					s = i;
+				}
+			}
+		}
+		if(s == -1){
+			g.push_back({-1, curTime, curTime + 1});
+			curTime++;
+		}else{
+			auto &x = p[s];
+			if(!g.empty() and g.back().pid == x.pid){
+				g.back().end++;
+			}else{
+				g.push_back({x.pid, curTime, curTime + 1});
+			}
+			curTime++;
+			x.rem--;
+
+			if(x.rem == 0){
+				x.ct = curTime;
+				x.tat = x.ct - x.at;
+				x.wt = x.tat - x.bt;
+				x.finished = true;
+				completed++;
+			}
+
+		}
+	}
+
+	Print(p, g);
+}
+
+/*
+Input Format:
+First enter the number of processes (n).
+Then enter Arrival Time (AT) and Burst Time (BT) for each process.
+
+Example Input:
+5
+0 5
+1 3
+2 8
+3 6
+4 4
+
+Algorithm:
+- This program implements Preemptive Shortest Job First (SRTF - Shortest Remaining Time First) Scheduling.
+- At every unit of time, the process with the shortest remaining burst time among arrived processes is selected.
+- The running process can be interrupted if another process with a shorter remaining time arrives.
+- Remaining burst time is stored in the rem array.
+- The program calculates Completion Time (CT), Turnaround Time (TAT), and Waiting Time (WT).
+- Finally, it displays average TAT, average WT, and the Gantt Chart.
+*/
+
+//Multi Parent Multi Child Process
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+int main() {
+    pid_t pid;
+
+    pid = fork();
+
+    if (pid < 0) {
+        printf("Fork failed!\n");
+        return 1;
+    }
+
+    if (pid > 0) {
+        // Parent process
+        printf("Parent PID: %d\n", getpid());
+        printf("Child PID: %d\n", pid);
+
+        printf("Numbers 1 to 5 from parent process:\n");
+
+        for (int i = 1; i <= 5; i++) {
+            printf("%d ", i);
+        }
+
+        printf("\n");
+    }
+    else {
+        // Child process
+        printf("Child PID: %d\n", getpid());
+
+        printf("Numbers 6 to 10 from child process:\n");
+
+        for (int i = 6; i <= 10; i++) {
+            printf("%d ", i);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
