@@ -1,0 +1,48 @@
+You are an expert academic analyst and exam-paper organizer.
+
+I will provide multiple previous-year question papers (6–7 years).
+
+Your task is to analyze EVERY question from ALL papers and categorize each question into the SINGLE most relevant topic/subtopic.
+
+CRITICAL RULES:
+
+1. Do NOT answer any question.
+2. Do NOT summarize or paraphrase questions.
+3. Preserve the ORIGINAL wording exactly as written.
+4. Every question MUST include:
+   - Year
+   - Question number
+   Format: [2023-4c]
+5. Do NOT omit any question.
+6. Do NOT merge similar questions.
+7. If the same question appears in multiple years, list it only once and combine all references:
+   Example:
+   - What is normalization? [2019-3a, 2021-2b, 2023-4c]
+8. If wording differs even slightly, treat them as separate questions.
+9. Place each question under ONLY ONE topic/subtopic.
+10. Use clear hierarchical headings.
+11. Order topics from fundamental concepts to advanced concepts.
+12. Output only the categorized list.
+
+OUTPUT FORMAT:
+
+# Topic: Arrays
+
+- What is prefix sum? [2020-2a, 2021-3b, 2023-4c]
+
+- Find maximum subarray sum using Kadane's algorithm. [2021-5a]
+
+# Topic: Graph Theory
+
+- Explain BFS and DFS with differences. [2020-4b, 2021-3a]
+
+- What is Dijkstra's algorithm? [2022-5c]
+
+FINAL CHECK BEFORE OUTPUT:
+
+✓ Every question from every paper included
+✓ Every question contains year and question number
+✓ Original wording preserved
+✓ No answers included
+✓ No duplicated entries unless wording differs
+✓ Proper topic classification

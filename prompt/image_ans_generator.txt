@@ -1,0 +1,56 @@
+prompt for handwritten ans:
+
+-----------------------------
+
+Generate an image containing ONLY the answer to the exam question provided below.
+
+
+
+Instructions:
+
+
+
+* Write the answer in a neat HUMAN HANDWRITTEN university exam-script style.
+
+* The answer should look like it was written by a top student during an actual examination.
+
+* Use exam-focused, point-wise format.
+
+* Include only information necessary for full marks.
+
+* Use proper headings, subheadings, numbering, bullets, definitions, formulas, and comparisons where appropriate.
+
+* Draw necessary diagrams, tables, flowcharts, circuit diagrams, ER diagrams, parse trees, architectures, or graphs only if required by the question.
+
+* Keep diagrams simple, neat, and properly labeled.
+
+* Maintain realistic handwritten spacing, indentation, and answer-sheet formatting.
+
+* Use black pen handwriting on a white exam-paper/notebook page.
+
+* Ensure all text is clear, readable, and not cropped.
+
+* If the answer is lengthy, continue naturally onto additional pages.
+
+* Do not include printed fonts, typed text, decorative elements, watermarks, page borders, or unrelated content.
+
+
+
+Output Rules:
+
+
+
+* Generate ONLY the handwritten answer-sheet image(s).
+
+* No markdown.
+
+* No explanation.
+
+* No chat response.
+
+* No extra text outside the image.
+
+
+
+follow for next all question asked. 
+

@@ -1,0 +1,78 @@
+UBUNTU SHORTCUTS
+================
+
+alias projects='xdg-open /home/mahamudul-hasan-masum/Projects'
+→ projects = Projects GUI
+
+
+alias monthly='cd /home/mahamudul-hasan-masum/Projects/CP/monthly && ls'
+→ monthly = CP/monthly + ls
+
+
+alias topicwise='cd /home/mahamudul-hasan-masum/Projects/CP/TopicWise && ls'
+→ topicwise = CP/TopicWise + ls
+
+
+alias university='cd /home/mahamudul-hasan-masum/Projects/University && ls'
+→ university = University + ls
+
+
+alias contest='xdg-open "/home/mahamudul-hasan-masum/Projects/CP/contest"'
+→ contest = Contest GUI
+
+
+alias cptmp='xdg-open "/home/mahamudul-hasan-masum/Desktop/cp tmp"'
+→ cptmp = cp tmp GUI
+
+
+alias academic='xdg-open "/run/media/mahamudul-hasan-masum/Academic HDD"'
+→ academic = Academic HDD GUI
+
+
+newcontest() {
+    base="$HOME/Projects/CP/contest/contest-$(date +%Y-%m-%d)"
+    folder="$base"
+
+    if [ -d "$folder" ]; then
+        i=1
+        while [ -d "$base ($i)" ]; do
+            ((i++))
+        done
+        folder="$base ($i)"
+    fi
+
+    mkdir -p "$folder"
+    cd "$folder"
+    code .
+}
+→ newcontest = New dated contest folder + VS Code
+
+
+CURRENT FOLDER
+==============
+
+xdg-open .
+→ Current folder GUI
+
+code .
+→ Current folder VS Code
+
+
+SPECIFIC FOLDER
+===============
+
+xdg-open "/path/to/folder"
+→ Specific folder GUI
+
+code "/path/to/folder"
+→ Specific folder VS Code
+
+
+STORE / RELOAD
+==============
+
+nano ~/.bashrc
+→ Shortcut add/edit
+
+source ~/.bashrc
+→ Changes apply/reload

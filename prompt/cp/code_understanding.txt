@@ -1,0 +1,255 @@
+I will give you a **programming problem and its solution code**.
+
+Analyze the problem and code, then explain the solution in **Bangla**, while keeping programming and technical terms in English.
+
+Follow the structure and style below **strictly**.
+
+---
+
+# 1. [PROBLEM / ALGORITHM NAME]
+
+Start with a simple one-line explanation:
+
+`=> Problemটি আসলে কী করতে বলছে।`
+
+Then briefly explain the main idea of the problem.
+
+---
+
+## 1. Main Idea / Formula
+
+If the problem has a mathematical formula, equation, observation, or transformation:
+
+* Define the variables first.
+* Derive the formula step-by-step.
+* Explain why each step is valid.
+* Finally connect the formula directly to the code.
+
+Use this style:
+
+```text
+ধরি:
+
+S1 = ...
+S2 = ...
+
+তাহলে:
+
+S1 + S2 = ...
+S1 - S2 = ...
+
+দুই equation যোগ করি:
+
+↓
+...
+
+সুতরাং:
+
+↓
+Main Formula
+```
+
+Then show the corresponding code:
+
+```cpp
+int x = formula;
+```
+
+Explain:
+
+`এই line-টাই উপরের formula implement করছে।`
+
+If there is no formula, replace this section with the **Main Concept / Observation**.
+
+---
+
+## 2. DP State / Variable Meaning
+
+If it is a DP problem, clearly explain what every important DP state represents.
+
+For example:
+
+```text
+dp[i][j] = ...
+```
+
+Explain exactly what `dp[i][j]` means in simple Bangla.
+
+If it is a recursive problem instead, explain what the function parameters represent.
+
+For example:
+
+```text
+LCS(x, y, ...)
+```
+
+Explain what `x`, `y`, etc. represent.
+
+---
+
+## 3. Base Case
+
+If there is a base case, explain:
+
+* What condition is checked?
+* Why do we need it?
+* Why does it return that value?
+
+Use this style:
+
+```text
+যদি ...
+    ↓
+তাহলে আর ...
+    ↓
+তাই return ...
+```
+
+Then show the relevant code.
+
+---
+
+## 4. Main Case / Transition
+
+Break the main logic into clear cases.
+
+For example:
+
+### If the condition is true
+
+First explain:
+
+```text
+যদি ...
+    ↓
+তাহলে ...
+    ↓
+তাই ...
+```
+
+Then show the code and explain why the transition works.
+
+### If the condition is false
+
+Explain all possible choices.
+
+If the code uses:
+
+* `max()`
+* `min()`
+* `+1`
+* previous states
+* diagonal
+* top
+* left
+* recursive calls
+
+explain exactly **why** they are being used.
+
+Focus on the reasoning behind the code, not just what the code does.
+
+---
+
+# Complete Code
+
+Show the complete solution code again with clean formatting.
+
+Do **not change the algorithm or logic** of my code.
+
+You may only:
+
+* Fix indentation.
+* Add useful comments.
+* Improve formatting.
+* Preserve the original variable names whenever possible.
+
+---
+
+# Summary
+
+At the end, summarize the entire algorithm using a simple arrow/flow format:
+
+```text
+PROBLEM
+   ↓
+Main Idea
+   ↓
+...
+   ↓
+...
+   ↓
+Final Answer
+```
+
+Then give the most important logic in a very short form:
+
+```text
+Condition 1
+↓
+Formula / Transition
+
+Condition 2
+↓
+Formula / Transition
+```
+
+If applicable, finish with:
+
+```text
+Time Complexity: O(...)
+Space Complexity: O(...)
+```
+
+---
+
+## Language and Explanation Rules
+
+1. **The entire explanation must be in Bangla.**
+
+2. Keep programming and technical terms in **English**.
+   Examples:
+
+   * DP
+   * state
+   * transition
+   * subset
+   * recursion
+   * base case
+   * array
+   * string
+   * index
+   * formula
+   * iteration
+   * function
+
+3. Use simple, natural Bangla. Explain as if I am learning the concept for the first time.
+
+4. Do not only explain **what** happens. Always explain **why** it happens.
+
+5. If there is a formula, derive the formula first and then connect it to the code.
+
+6. For DP problems, always explain:
+
+   * DP State
+   * Base Case
+   * Transition
+   * Final Answer
+
+7. For recursive solutions, always explain:
+
+   * Base Case
+   * Choices
+   * Recursive Calls
+   * Why `max`, `min`, `+1`, etc. are used
+
+8. Keep the explanation focused. Do not add unnecessary theory.
+
+9. Preserve my variable names whenever possible.
+
+10. Make the explanation useful for both **understanding the concept** and **quick revision before an exam or programming contest**.
+
+11. If I provide only code, infer the algorithm/concept from the code and explain it using this same format.
+
+12. If I say **"same format"**, use this exact structure and style.
+
+Now analyze the **Problem + Solution Code** I provide and explain it accordingly.

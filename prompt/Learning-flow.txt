@@ -1,0 +1,51 @@
+I have categorized 6-7 years of previous year exam questions into different topics. I will provide you with the file.
+
+Your task is to analyze all topics and create an optimal learning sequence (flowchart/roadmap) for exam preparation.
+
+While deciding the order, consider these factors:
+
+1. Frequency of appearance in previous years
+2. Total marks distribution
+3. Importance of the topic in the syllabus
+4. Dependency between topics (which topics should be learned before others)
+5. Difficulty level
+6. Time required to master the topic
+7. Conceptual understanding vs memorization requirements
+8. Probability of the topic appearing in future exams
+9. Scoring potential (high marks with relatively low effort)
+10. Overall ROI (Return on Investment) for exam preparation
+
+For each topic, provide:
+
+- Priority level (Critical / High / Medium / Low)
+- Reason for its position in the sequence
+- Estimated study time
+- Best learning method (theory first, problem-solving first, active recall, spaced repetition, notes making, flashcards, previous year questions, etc.)
+- Common mistakes students make
+- Minimum preparation required to secure marks
+- Advanced preparation for maximizing marks
+
+Finally, provide:
+
+1. A visual flowchart showing the learning order.
+2. A week-by-week study plan assuming I have X weeks remaining before the exam.
+3. A "last-minute revision strategy" focusing on the highest-yield topics.
+4. If some topics are low priority, explicitly mention whether I can skip them or study them superficially.
+
+Important:
+- Prioritize scoring well in the exam, not just gaining theoretical knowledge.
+- Use an "exam-focused" mindset.
+- If there is a tradeoff between depth and marks, prefer the strategy that maximizes marks.
+- Be data-driven and explain your reasoning using the previous year question trends.
+- Present the final learning sequence as:
+
+Topic A
+    ↓
+Topic B
+    ↓
+Topic C
+    ↓
+...
+
+and also provide it as a table with columns:
+Topic | Priority | Frequency | Marks Weight | Difficulty | Estimated Time | Learning Method | Reason for Order
