@@ -1,0 +1,15 @@
+Tier 1: প্রাইমারি ফাইল (এগুলো ১০০% আয়ত্তে আনতে হবে)
+BFS.cpp — আন-ওয়েটেড গ্রাফের শর্টেস্ট পাথ, লেভেল ট্রাভার্সাল ও Bipartite Graph চেক।
+DFS.cpp — কানেক্টেড কম্পোনেন্ট গণনা, ব্যাকট্র্যাকিং ও সাবট্রি সাইজ বের করা।
+Cycle Detection.cpp — ডাইরেক্টেড ও আনডাইরেক্টেড গ্রাফে সাইকেল সনাক্তকরণ।
+Topological Sorting.cpp — DAG (Directed Acyclic Graph)-এর ওপর নোডের অর্ডারিং ও ডিপেন্ডেন্সি হ্যান্ডলিং।Dijkstra.cpp — পজিটিভ এজ ওয়েটেড গ্রাফে যেকোনো নোড থেকে শর্টেস্ট পাথ।
+Krushkal's MST.cpp — মিনিমাম স্প্যানিং ট্রি তৈরি এবং DSU (Disjoint Set Union)-এর স্ট্রাকচার শেখা।
+Tree Diameter.cpp — ট্রির সবচেয়ে দূরবর্তী দুই নোডের মধ্যে দূরত্ব (ব্যাস) বের করা।
+LCA.cpp — Binary Lifting দিয়ে কুইকলি অ্যানসেস্টার ও দূরত্ব বের করা (যেটা তুমি প্র্যাকটিস করছ)।
+
+
+Tier 2: সেকেন্ডারি ফাইল (Rating 1500+ প্রবলেমের জন্য)
+SCC.cpp — Strongly Connected Components (Tarjan / Kosaraju অ্যালগরিদম)।
+Floyd Warshall.cpp — ছোট গ্রাফে ($N \le 400$) অল-পেয়ারস শর্টেস্ট পাথ বের করা।
+Bellman Ford.cpp (অথবা SPFA.cpp) — নেগেটিভ এজ বা নেগেটিভ সাইকেল হ্যান্ডেল করা।
+Articulation Bridges.cpp ও Articulation Points.cpp — গ্রাফ ভেঙে যাওয়া রোখা বা ক্রুশিয়াল এজ/নোড খোঁজা।

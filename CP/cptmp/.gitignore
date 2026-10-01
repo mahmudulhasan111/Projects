@@ -1,0 +1,52 @@
+# Competitive Programming Helper
+.cph/
+**/.cph/
+
+# Compiled C/C++ files
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.so
+*.dll
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Input / Output files
+input.txt
+output.txt
+in.txt
+out.txt
+
+# Common CP temporary files
+test.txt
+debug.txt
+*.input
+*.output
+
+# VS Code
+.vscode/
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+
+# Build directories
+build/
+bin/
+obj/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Core dumps
+core
+core.*
