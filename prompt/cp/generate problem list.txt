@@ -1,0 +1,133 @@
+# ICPC Dhaka Preli: Conceptual Problem Selection Master Prompt
+
+Act as an experienced ICPC coach who specializes in preparing mid-level beginner competitive programmers for university-level ICPC preliminary contests.
+
+## 1. Our Team & Current Level
+
+- We are a team of 3 students preparing for the upcoming ICPC Dhaka Preliminary Contest.
+- We practice by solving problems individually on VJudge, creating custom contests with problems from multiple online judges.
+- Our current comfortable level is around Codeforces 1200–1300.
+- Consider us **mid-level beginners**, not absolute beginners and not advanced competitive programmers.
+- Our goal is to improve our conceptual understanding, implementation skills, problem-solving ability, and performance in ICPC Preli.
+
+## 2. Today's Problem Requirements
+
+I am responsible for collecting problems from the following topics:
+
+- Graph: 2 problems
+- Binary Search on answer: 1 problem
+- DSU (Disjoint Set Union): 2 problems
+
+**Important:** These topics and quantities are variables. Every time I use this prompt, I may change the topics and the number of problems required.
+
+## 3. Strict Difficulty Limit
+
+Every selected problem must have an estimated **Codeforces-equivalent difficulty between 1100 and 1400, inclusive**.
+
+- 1100–1200: Basic concept application.
+- 1200–1300: Moderate reasoning and implementation.
+- 1300–1400: Stronger conceptual understanding or a useful problem-solving trick.
+
+Never recommend a problem whose estimated difficulty exceeds CF 1500.
+
+The original problem does NOT have to be from Codeforces. Estimate its difficulty by comparing the required algorithmic insight, implementation complexity, edge cases, and problem-solving skills with Codeforces problems.
+
+If a problem is too easy to teach us something useful, skip it. If its difficulty is uncertain or likely above 1400, choose a safer alternative.
+
+## 4. Online Judges to Prioritize
+
+Search for suitable problems from multiple online judges:
+
+1. UVA
+2. LightOJ
+3. Kattis
+4. CSES
+5. AtCoder
+6. SPOJ
+7. ICPC regional contests, Gym contests, and other reputable online judges
+8. codeforces
+9. codechef
+
+Give special attention to UVA, LightOJ, Kattis, and other ICPC-style judges because we want experience with the style of problems that may appear in university ICPC contests.
+
+Do not force every judge into the list. Choose the best available problems regardless of platform.
+
+## 5. Problem Selection Criteria
+
+Choose problems that provide maximum learning value rather than simply collecting random questions.
+
+For each topic:
+
+- Select problems that teach different concepts or applications within that topic.
+- Prefer problems that develop transferable problem-solving techniques.
+- Include useful edge cases, constraints, and implementation challenges.
+- Prefer problems that can realistically be solved by our current level after reasonable thinking.
+- Avoid problems requiring advanced algorithms outside the requested topics unless the additional concept is very basic.
+- Avoid redundant problems that teach essentially the same idea.
+- Prefer original problem statements and official problem pages.
+- Verify that each problem exists and that its submission page is accessible.
+- Do not invent problem names, IDs, URLs, ratings, or difficulty estimates.
+- If you cannot verify a problem's details, explicitly mention the uncertainty or replace it.
+
+## 6. Topic-Specific Requirements
+
+
+For topics, identify the most important beginner-to-intermediate concepts and select problems accordingly.
+
+## 7. Required Output Format
+
+Organize the answer topic-wise.
+
+For every selected problem, provide:
+
+1. **Problem name**
+2. **Online judge**
+3. **Problem ID**, if available
+4. **Direct problem URL**
+5. **Estimated CF-equivalent rating**, with a short reason for the estimate
+6. **Main concept learned**
+7. **Why this problem is worth solving for ICPC Preli**
+8. **Expected approach**, in one or two sentences, without revealing the full solution
+9. **Estimated solving time**
+10. **VJudge search instructions**, including the exact problem name or ID and the original judge to select
+
+Clearly label the problems as Easy, Moderate, or Challenging within our permitted difficulty range.
+
+## 8. Quality Control
+
+Before finalizing the list, check:
+
+- Does every problem fit the requested topic?
+- Is every problem within CF-equivalent 1100–1400?
+- Does each problem teach a useful and distinct concept?
+- Are the links and problem IDs genuine?
+- Is the selection suitable for ICPC-style preparation?
+- Are the problems varied across online judges?
+- Can we reasonably attempt these problems at our current level?
+
+If an exact CF-equivalent rating is unavailable, mark it as an estimate rather than presenting it as an official rating.
+
+If the requested number of high-quality problems cannot be found, provide fewer verified problems and explain why instead of filling the list with unsuitable questions.
+
+## 9. Final Recommendation
+
+At the end, provide:
+
+- The recommended solving order.
+- Which problem should be attempted first and why.
+- The key concept we should learn from each problem.
+- A short checklist of what we should be able to do after completing the set.
+
+**Do not provide full solutions or code unless I explicitly request them.**
+
+The purpose is to help us learn concepts, recognize patterns, and become better at solving unfamiliar ICPC Preli problems, not merely to increase our solved count.
+
+---
+
+### Today's variable inputs
+
+Topics and required problem counts:
+[Write topics and quantities here]
+
+Additional preferences:
+[Optional: preferred online judges, specific subtopics, contest duration, or concepts to avoid]
