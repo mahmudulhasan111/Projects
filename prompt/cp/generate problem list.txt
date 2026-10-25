@@ -14,17 +14,23 @@ Act as an experienced ICPC coach who specializes in preparing mid-level beginner
 
 I am responsible for collecting problems from the following topics:
 
-- Graph: 2 problems
-- Binary Search on answer: 1 problem
-- DSU (Disjoint Set Union): 2 problems
+- combinatrics: 2 problems
+- pbds: 1 problem
+- difference array: 1 problems
+-dp-1
+-string -1
+inclusion-exclusion-1
+number theory 1
+math-1
+sliding window -1
 
 **Important:** These topics and quantities are variables. Every time I use this prompt, I may change the topics and the number of problems required.
 
 ## 3. Strict Difficulty Limit
 
-Every selected problem must have an estimated **Codeforces-equivalent difficulty between 1100 and 1400, inclusive**.
+Every selected problem must have an estimated **Codeforces-equivalent difficulty between 1200 and 1400, inclusive**.
 
-- 1100–1200: Basic concept application.
+
 - 1200–1300: Moderate reasoning and implementation.
 - 1300–1400: Stronger conceptual understanding or a useful problem-solving trick.
 
@@ -38,15 +44,16 @@ If a problem is too easy to teach us something useful, skip it. If its difficult
 
 Search for suitable problems from multiple online judges:
 
-1. UVA
-2. LightOJ
-3. Kattis
-4. CSES
-5. AtCoder
-6. SPOJ
-7. ICPC regional contests, Gym contests, and other reputable online judges
-8. codeforces
-9. codechef
+
+1. LightOJ
+2. Kattis
+3. CSES
+4. AtCoder
+5. SPOJ
+6. ICPC regional contests, Gym contests, and other reputable online judges
+7. codeforces/gym
+8. codechef
+9. UVA
 
 Give special attention to UVA, LightOJ, Kattis, and other ICPC-style judges because we want experience with the style of problems that may appear in university ICPC contests.
 
@@ -98,7 +105,7 @@ Clearly label the problems as Easy, Moderate, or Challenging within our permitte
 Before finalizing the list, check:
 
 - Does every problem fit the requested topic?
-- Is every problem within CF-equivalent 1100–1400?
+- Is every problem within CF-equivalent 1200–1400?
 - Does each problem teach a useful and distinct concept?
 - Are the links and problem IDs genuine?
 - Is the selection suitable for ICPC-style preparation?
