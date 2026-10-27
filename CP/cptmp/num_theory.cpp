@@ -110,6 +110,23 @@ map<int,int> spf_Factor2(int n){
     return cnt;
 }
 
+// ===================== FAST FACTORIZATION FOR LARGE N (Up to 10^12) =====================
+// Depends on sieve() and all_Primes
+map<ll, int> spf_factor_large(ll n) {
+    map<ll, int> cnt;
+    for (ll p : all_Primes) {
+        if (p * p > n) break;
+        if (n % p == 0) {
+            while (n % p == 0) {
+                cnt[p]++;
+                n /= p;
+            }
+        }
+    }
+    if (n > 1) cnt[n]++;
+    return cnt;
+}
+
 
 // ===================== DIVISORS =====================
 
@@ -129,14 +146,14 @@ vector<int> getDivisors(int n) {
 }
 
 ll count_div(ll n){
-    auto mp=spf_factor1(n);
+    auto mp=spf_factor2(n);
     ll r=1;
     for(auto [p,c]:mp) r*=(c+1);
     return r;
 }
 
 ll sum_div(ll n){
-    auto mp=spf_factor1(n);
+    auto mp=spf_factor2(n);
     ll r=1;
     for(auto [p,c]:mp){
         ll term=1,cur=1;

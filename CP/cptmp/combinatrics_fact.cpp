@@ -82,7 +82,7 @@ ll nCr_simple(ll n, ll r)
 // = C(stars + bars, stars) = C(stars + bars, bars)
 ll stars_and_bars(ll k, ll n)
 {
-    return nCr(k + (n- 1), k);
+    return nCr(k + (n- 1), k); // nCr(k+(n-1),n-1) same;
 }
 
 

@@ -14,15 +14,18 @@ Act as an experienced ICPC coach who specializes in preparing mid-level beginner
 
 I am responsible for collecting problems from the following topics:
 
-- combinatrics: 2 problems
+- combinatrics: 5 problems
 - pbds: 1 problem
 - difference array: 1 problems
--dp-1
--string -1
+-dp-2
+-string -1(valo implementation)
 inclusion-exclusion-1
-number theory 1
+number theory 3
 math-1
-sliding window -1
+sliding window -2
+-DSU-3
+-graph-3(dfs,bfs)
+-grid graph(3/4)
 
 **Important:** These topics and quantities are variables. Every time I use this prompt, I may change the topics and the number of problems required.
 
@@ -44,16 +47,16 @@ If a problem is too easy to teach us something useful, skip it. If its difficult
 
 Search for suitable problems from multiple online judges:
 
-
-1. LightOJ
-2. Kattis
-3. CSES
-4. AtCoder
-5. SPOJ
-6. ICPC regional contests, Gym contests, and other reputable online judges
-7. codeforces/gym
+1. ICPC regional contests, Gym contests, and other reputable online judges
+2. CSES
+3 AtCoder
+4. lightOJ
+5. Kattis
+6. codeforces/gym
+6. SPOJ
+7.UVA
 8. codechef
-9. UVA
+ 
 
 Give special attention to UVA, LightOJ, Kattis, and other ICPC-style judges because we want experience with the style of problems that may appear in university ICPC contests.
 
