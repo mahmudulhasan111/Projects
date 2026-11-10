@@ -1,6 +1,6 @@
 You are an expert academic analyst and exam-paper organizer.
 
-I will provide multiple previous-year question papers (6–7 years).
+I will provide multiple previous-year question papers (3–5 years).
 
 Your task is to analyze EVERY question from ALL papers and categorize each question into the SINGLE most relevant topic/subtopic.
 
@@ -23,7 +23,8 @@ CRITICAL RULES:
 10. Use clear hierarchical headings.
 11. Order topics from fundamental concepts to advanced concepts.
 12. Output only the categorized list.
-
+13. Topics arranged sequentially based on conceptual dependencies
+14.Prerequisite topics appear before dependent topics
 OUTPUT FORMAT:
 
 # Topic: Arrays
@@ -46,3 +47,5 @@ FINAL CHECK BEFORE OUTPUT:
 ✓ No answers included
 ✓ No duplicated entries unless wording differs
 ✓ Proper topic classification
+✓ Topics arranged sequentially based on conceptual dependencies
+✓ Prerequisite topics appear before dependent topics

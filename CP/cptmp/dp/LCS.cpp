@@ -116,27 +116,6 @@ Different Character → max(LCS(m-1,n), LCS(m,n-1))
 RECURSIVE
 */
 
-int LCS(string X, string Y, int m, int n)
-{
-    // Base Case
-    if (m == 0 || n == 0)
-        return 0;
-
-    // Last characters are same
-    if (X[m - 1] == Y[n - 1])
-    {
-        return 1 + LCS(X, Y, m - 1, n - 1);
-    }
-
-    // Last characters are different
-    else
-    {
-        return max(
-            LCS(X, Y, m - 1, n),
-            LCS(X, Y, m, n - 1)
-        );
-    }
-}
 
 
 //--------------------------------------

@@ -1,0 +1,88 @@
+ //BINARY SEARCH
+void binary_search_min_satisfy(){
+    
+    auto ok=[&](ll mid){
+        return true;
+    };
+
+    ll l=0,r=1e9,mid,ans=-1;
+    while(l<=r){
+        mid=l+(r-l)/2;
+        if(ok(mid)){
+            ans=mid;
+            r=mid-1;
+        }else{
+            l=mid+1;
+        }
+    }
+    cout<<ans<<endl;
+}
+
+void binary_search_max_satisfy(){
+    
+    auto ok=[&](ll mid){
+        return true;
+    };
+    ll l=1,r=1e9,mid,ans=-1;
+    while(l<=r){
+        mid=l+(r-l)/2;
+        if(ok(mid)){
+            ans=mid;
+            l=mid+1;
+        }else{
+            r=mid-1;
+        }
+    }
+    cout<<ans<<endl;
+}
+
+void binary_search_array_satisfy(vll &a,ll target){
+    ll l=0,r=(ll)a.size()-1,mid;
+    bool found=false;
+    while(l<=r){
+        mid=l+(r-l)/2;
+        if(a[mid]==target){
+            found=true;
+            break;
+        }else if(a[mid]<target){
+            l=mid+1;
+        }else{
+            r=mid-1;
+        }
+    }
+    if(found) cout<<"Target found at index "<<mid<<endl;
+    else cout<<"Target not found"<<endl;
+}
+//Difference array
+const int MAXN = 2e5 + 5;
+ll diff1D[MAXN], a1D[MAXN];
+void update1D(int l, int r, ll val) {
+    diff1D[l] += val;
+    diff1D[r + 1] -= val;
+}
+void build1D(int n) {
+    for (int i = 1; i <= n; i++) {
+        diff1D[i] += diff1D[i - 1]; // Prefix sum
+        a1D[i] = diff1D[i];         // Final reconstructed array
+    }
+}
+// মাল্টিপল টেস্টকেসের ক্ষেত্রে গ্লোবাল অ্যারে রিমেম্বারিং/ক্লিন করার ফাংশন
+void clear1D(int n) {
+    for (int i = 0; i <= n + 2; i++) diff1D[i] = 0, a1D[i] = 0;
+}
+void solve()
+{
+    int n = 5;
+    clear1D(n);
+    // [2, 4] রেঞ্জে +5 এবং [1, 3] রেঞ্জে +2 যোগ করা
+    update1D(2, 4, 5);
+    update1D(1, 3, 2);
+    build1D(n);
+    // আউটপুট: 2 7 7 5 0
+}
+
+### How to Use Reference Cards & Notes
+* **What are Note Cards?** Note cards let you store theoretical formulas, edge-case checklists, and algorithm cheat-sheets directly in your codebook.
+* **Markdown Formatting:** Write in clean markdown with **bold**, *italics*, bulleted checklists, and code snippets.
+* **Math Formulas:** Supports mathematical notations like $O(N \log N)$, $\sum_{i=1}^n i = \frac{n(n+1)}{2}$, and modular equations.
+* **Card Themes:** Switch between **Craft.do** (clean, tactile), **IDE Window** (macOS terminal styling), and **Academic** (IEEE monograph) in the Styles tab!
